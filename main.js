@@ -6,12 +6,17 @@ $.getJSON('https://api.airtable.com/v0/appSrgke7E0ElZhMY/Locations?api_key=key2m
       var address = record.fields['Address'];
       var rating = record.fields['Rating'];
       var picture = record.fields['Pictures'];
-      // console.log(picture);
-      if(picture[0]) {
-        html.push(`<img src="${picture[0].url}" />`)
-      }
-      html.push(`<h2>${name}, ${address}, ${rating}</h2>`);
+      html.push(listView(name, address, rating, picture));
     });
     $('body').append(html);
   }
 );
+
+var listView = function(name, address, rating, picture) {
+  return `
+    <h2>${name}</h2>
+    <p>${address}</p>
+    <p>${rating}</p>
+    ${picture ? `<img src="${picture[0].url}">` : ``}
+  `;
+}
